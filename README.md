@@ -22,14 +22,14 @@ This repository contains five python scripts:
   
 2. DE_Entropy.py
 
-   This script uses Average Entropy Difference as the fitness function.
-   Input: JPEG images (frames from a video)
+   This script uses Average Entropy Difference as the fitness function.  
+   Input: JPEG images (frames from a video)  
    Output: GIF image containing all the extracted key frames.
   
 3. DE_Euclidean.py
 
-   This script uses Average Euclidean Distance as the fitness function.
-   Input: JPEG images (frames from a video)
+   This script uses Average Euclidean Distance as the fitness function.  
+   Input: JPEG images (frames from a video)  
    Output: GIF image containing all the extracted key frames.
   
 4. DE_LIVE.py
