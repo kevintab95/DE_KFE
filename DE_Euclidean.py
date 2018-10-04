@@ -14,10 +14,10 @@ NUMBER_OF_NP_CANDIDATES = 10
 # Location to read images from.
 # NOTE: "_" is used to follow a naming convention
 # eg. _20.jpg, _21.jpg etc...
-READ_LOCATION = "/path/to/location/_"
+READ_LOCATION = "./frames/_"
 
 # Location to write GIF images to.
-GIF_WRITE_LOCATION = "/path/to/location/sample.GIF"
+GIF_WRITE_LOCATION = "./DE_Euclidean.GIF"
 
 # Population matrix.
 NP = []
@@ -44,7 +44,7 @@ def getAED( KF ):
                 im2 = cv2.imread(READ_LOCATION + str(KF[i+1]) + ".jpg",0)
                 ED_sum += cv2.norm(im1, im2, cv2.NORM_L2)
             except:
-                print i, KF, KF[i], KF[i+1]
+                print(i, KF, KF[i], KF[i+1])
                 continue
             break
     return ED_sum/(TOTAL_KEY_FRAMES - 1)
@@ -54,7 +54,7 @@ def initialize_NP():
     for i in range(NUMBER_OF_NP_CANDIDATES):
         NP.append(sorted(random.sample(range(1, MAX_NUMBER_OF_FRAMES+1), TOTAL_KEY_FRAMES)))
         NP[-1].append(getAED(NP[-1]))
-        print NP[-1]
+        print(NP[-1])
 
 # MUTATION
 def mutation(num):
@@ -75,8 +75,8 @@ def mutation(num):
 
 # CROSSOVER (uniform crossover with Cr = 0.6).
 def crossover(parent, mutant):
-    print "mutant: ", mutant
-    print "parent: ", parent
+    print("mutant: ", mutant)
+    print("parent: ", parent)
     for j in range(TOTAL_KEY_FRAMES) :
         if(random.uniform(0,1) < Cr) :
             TV.append(mutant[j])
@@ -84,15 +84,15 @@ def crossover(parent, mutant):
             TV.append(parent[j])
     TV.sort()
     TV.append(getAED(TV))
-    print "TV    : ", TV
+    print("TV    : ", TV)
 
 # SELECTION : Selects offspring / parent based on higher ED value.
 def selection(parent, trail_vector):
     if(trail_vector[-1] > parent[-1]):
         parent[:] = trail_vector
-        print "yes", parent
+        print("yes", parent)
     else:
-        print "no"
+        print("no")
 
 # bestParent returns the parent with then maximum ED value.
 def bestParent(population):
@@ -110,16 +110,16 @@ def bestParent(population):
 initialize_NP()
 for GENERATION in range(STOPPING_ITERATION):
     for i in range(NUMBER_OF_NP_CANDIDATES):
-        print "---------------------", "PARENT:", i+1 , "GENERATION:", GENERATION+1, "---------------------"
+        print("---------------------", "PARENT:", i+1 , "GENERATION:", GENERATION+1, "---------------------")
         mutation(i)
         crossover(NP[i], MV)
         selection(NP[i], TV)
-        print NP[i]
+        print(NP[i])
         TV[:] = []
-        print ""
-    print ""
+        print("")
+    print("")
 best_parent = bestParent(NP)
-print "best solution is: ", best_parent
+print("best solution is: ", best_parent)
 images_for_gif = []
 for frame_number in best_parent[:-1]:
         images_for_gif.append(imageio.imread(READ_LOCATION + str(frame_number) + '.jpg'))

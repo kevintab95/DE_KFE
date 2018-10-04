@@ -3,11 +3,16 @@ import cv2
 # Write location for the extracted webcam feed.
 # NOTE: '_' is included because of the naming convention
 # used for the images eg. _20.jpg, _21.jpg etc...
-WRITE_BUFFER_LOCATION = "/path/to/location/_"
+WRITE_BUFFER_LOCATION = "./frames/_"
 
-NUMBER_OF_FRAMES = 300
+# cap = cv2.VideoCapture(0) #Use this for webcamfeed
+cap = cv2.VideoCapture('test.mp4') #Replace with your own video file name
 
-cap = cv2.VideoCapture(0)
+
+# print(int(cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+NUMBER_OF_FRAMES = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
 # Capture first frame.
 ret0, frame0 = cap.read()
 init_gray = cv2.cvtColor(frame0, cv2.COLOR_BGR2GRAY)
